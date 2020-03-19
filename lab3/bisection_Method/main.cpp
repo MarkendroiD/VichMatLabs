@@ -5,13 +5,13 @@
 
 using namespace std;
 
-const double eps = 0.01;
+const double eps = 0.0001;
 
 // Вывод в терминал уравнения
 void printUrav(double *l, double *AB, int n)
 {
 	int k = n;
-	cout << "\nДанная функция:\nF(x) = ";
+	cout << "\nДана функция:\nF(x) = ";
 	for (int i = 0; i < n; i++)
 	{
 		k -= 1;
@@ -55,22 +55,63 @@ double check(double *l, double *AB, int n)
 		if (abs(F1) < eps)
 		{
 			cout << "Т.к. F("<< AB[0] << ") = "<< F1 << ", то искомый x = " << AB[0] << endl;
-			return n;
+			return 228;
 		}
 		if (abs(F2) < eps)
 		{
 			cout << "Т.к. F("<< AB[1] << ") = "<< F2 << ", то искомый x = " << AB[1] << endl;
-			return n;
+			return 228;
 		}
 		cout << "Решений либо нет, либо больше 1, т.к. функция на заданных границах одного знака" << endl;
 		return NULL;
 	}
+	cout << "Функции на границах имеют разные знаки, значит 1 решение" << endl;
 	return n;
 }
 
-double *bisection()
+double bisection(double *l, double *AB, int n)
 {
+	double x;
+	int s = 0; 
 
+	while(abs(AB[0] - AB[1]) >= eps && s < 100)
+	{
+		x = (AB[0] + AB[1])/2;
+		if (abs(x) < eps)
+			x = 0;
+		double F1 = 0, F2 = 0, FX = 0;
+		int k = n;
+		for (int i = 0; i < n; i++)
+		{
+			k--;
+			if (k != 0){
+				FX = FX + l[i] * pow(x, k);
+				F1 = F1 + l[i] * pow(AB[0], k);
+				F2 = F2 + l[i] * pow(AB[1], k);
+			}
+			else 
+			{
+				FX = FX + l[i];
+				F1 = F1 + l[i];
+				F2 = F2 + l[i];
+			}
+		}
+		if (abs(FX) < eps)
+		{
+			FX = 0;
+			cout << "Количество итераций: " << s << endl; 
+			return x;
+		}
+		if (F1*FX < 0)
+			AB[1] = x;
+		else
+			AB[0] = x;
+
+		//cout << "\t" << s << "\t" << AB[0] << "\t" << AB[1]<< endl;
+		s++;
+	}
+	cout << "Количество итераций: " << s << endl; 
+	return x;
 }
 
 int main()
@@ -100,7 +141,12 @@ int main()
 			int CH = check(l, AB, n);
 			if (CH == NULL)
 				continue;
+			if (CH != 228) 
+			{
+				double x = bisection(l, AB, n);
+				cout << "Ответ с точностью eps = "<< eps << ":\t" << x << endl;
+			}
 		}
 	}
-
+	return 0;
 }
