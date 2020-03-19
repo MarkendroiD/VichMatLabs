@@ -277,7 +277,7 @@ double * zeidel(double **a, double *y, int n)
 		//cout << endl;
 
 
-		/*
+		
 		for (int i = 0; i < n; i++)
 		{
 			int h = x[i] * (10.0/eps);
@@ -292,7 +292,7 @@ double * zeidel(double **a, double *y, int n)
 			prevX[i] = (double)l  * eps;
 		}
 		
-		*/
+		
 		//for (int i = 0; i < n; i++)
 			//cout << x[i] << "\t";
 		//for (int i = 0; i < n; i++)

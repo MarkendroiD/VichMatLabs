@@ -108,9 +108,15 @@ double bisection(double *l, double *AB, int n)
 			AB[0] = x;
 
 		//cout << "\t" << s << "\t" << AB[0] << "\t" << AB[1]<< endl;
+
 		s++;
 	}
-	cout << "Количество итераций: " << s << endl; 
+	cout << "Количество итераций: " << s << endl;
+	int alO = x * (10.0/eps);
+	if (alO % 10 >= 5) 
+		alO +=10;
+	alO = alO/10;
+	x = (double)alO * eps; 
 	return x;
 }
 
