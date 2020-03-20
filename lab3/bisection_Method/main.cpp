@@ -112,11 +112,7 @@ double bisection(double *l, double *AB, int n)
 		s++;
 	}
 	cout << "Количество итераций: " << s << endl;
-	int alO = x * (10.0/eps);
-	if (alO % 10 >= 5) 
-		alO +=10;
-	alO = alO/10;
-	x = (double)alO * eps; 
+
 	return x;
 }
 
@@ -150,6 +146,11 @@ int main()
 			if (CH != 228) 
 			{
 				double x = bisection(l, AB, n);
+				int alO = x * (10.0/eps);
+				if (alO % 10 >= 5) 
+					alO +=10;
+				alO = alO/10;
+				x = (double)alO * eps; 
 				cout << "Ответ с точностью eps = "<< eps << ":\t" << x << endl;
 			}
 		}

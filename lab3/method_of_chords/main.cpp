@@ -33,7 +33,7 @@ double f (double *l, double x, int n)
 	{
 		k--;
 		if (k != 0){
-			F = F + l[i] * pow(AB[0], k);
+			F = F + l[i] * pow(x, k);
 		}
 		else 
 		{
@@ -50,25 +50,9 @@ double f (double *l, double x, int n)
 double check(double *l, double *AB, int n)
 {
 	double F1 = 0, F2 = 0;
-	int k = n;
-	for (int i = 0; i < n; i++)
-	{
-		k--;
-		if (k != 0){
-			F1 = F1 + l[i] * pow(AB[0], k);
-			F2 = F2 + l[i] * pow(AB[1], k);
-		}
-		else 
-		{
-			F1 = F1 + l[i];
-			F2 = F2 + l[i];
-		}
-		
-	}
-	if (abs(F1) < eps)
-		F1 = 0;
-	if (abs(F2) < eps)
-		F2 = 0;
+	F1 = f(l, AB[0], n);
+	F2 = f(l, AB[1], n);
+	
 	cout << "F(" << AB[0] << ") = " << F1 << endl;
 	cout << "F(" << AB[1] << ") = " << F2 << endl;
 	if (F1*F2 >= 0)
@@ -97,26 +81,14 @@ double mOfChords(double *l, double *AB, int n)
 
 	while(abs(AB[0] - AB[1]) >= eps && s < 100)
 	{
-		x = (AB[0] + AB[1])/2;
+		x = AB[0] - ((f(l, AB[0], n))/(f(l, AB[1], n) - f(l, AB[0], n))) * (AB[1] - AB[0]);
 		if (abs(x) < eps)
 			x = 0;
 		double F1 = 0, F2 = 0, FX = 0;
-		int k = n;
-		for (int i = 0; i < n; i++)
-		{
-			k--;
-			if (k != 0){
-				FX = FX + l[i] * pow(x, k);
-				F1 = F1 + l[i] * pow(AB[0], k);
-				F2 = F2 + l[i] * pow(AB[1], k);
-			}
-			else 
-			{
-				FX = FX + l[i];
-				F1 = F1 + l[i];
-				F2 = F2 + l[i];
-			}
-		}
+		FX = f(l, x, n);
+		F1 = f(l, AB[0], n);
+		F2 = f(l, AB[1], n);
+		
 		if (abs(FX) < eps)
 		{
 			FX = 0;
@@ -133,11 +105,6 @@ double mOfChords(double *l, double *AB, int n)
 		s++;
 	}
 	cout << "Количество итераций: " << s << endl;
-	int alO = x * (10.0/eps);
-	if (alO % 10 >= 5) 
-		alO +=10;
-	alO = alO/10;
-	x = (double)alO * eps; 
 	return x;
 }
 
@@ -171,6 +138,11 @@ int main()
 			if (CH != 228) 
 			{
 				double x = mOfChords(l, AB, n);
+				int alO = x * (10.0/eps);
+				if (alO % 10 >= 5) 
+					alO +=10;
+				alO = alO/10;
+				x = (double)alO * eps; 
 				cout << "Ответ с точностью eps = "<< eps << ":\t" << x << endl;
 			}
 		}
