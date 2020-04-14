@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class lagrange
+class laggy
 {
 private:
 	double x;
@@ -13,11 +13,11 @@ private:
 	int size;
 	ifstream f;
 public:
-	lagrange()
+	laggy()
 	{
 		cout << "Интерполяция полиномом Лагранжа\n";
 
-		f.open("point.txt");
+		f.open("kek.txt");
 		f >> size;
 		x_values = new double[size];
 		y_values = new double[size];
@@ -31,7 +31,7 @@ public:
 		f.close();
 	}
 	
-	void print() //Вывод на экран
+	void print() 
 	{
 		cout << endl;
 		cout << "x";
@@ -57,22 +57,22 @@ public:
 			{
 				if (j == i) continue;
 				basics_pol *= (x - x_values[j]) / (x_values[i] - x_values[j]);
-				cout << "basics_pol = " << "( " << x << " - " << x_values[j] << " )" << " / " << "( " << x_values[i] << " - " << x_values[j] << " )" << " = " << (x - x_values[j]) / (x_values[i] - x_values[j]) << endl;
+				cout << "( " << x << " - " << x_values[j] << " )" << " / " << "( " << x_values[i] << " - " << x_values[j] << " )" << " = " << (x - x_values[j]) / (x_values[i] - x_values[j]) << endl;
 			}
 			cout << endl;
 			lagrange_pol += basics_pol * y_values[i];
 
-			cout << "lagrange_pol = " << basics_pol << " * " << y_values[i]  << " = " << basics_pol * y_values[i] << endl << endl << endl;
+			cout << basics_pol << " * " << y_values[i]  << " = " << basics_pol * y_values[i] << endl << endl << endl;
 		}
-		cout << "Answer: " << lagrange_pol << endl;
+		cout << "Ответ: " << lagrange_pol << endl;
 		return lagrange_pol;
 	}
 };
 
 int main()
 {
-	lagrange a;
-	a.print();
-	a.interpolate();
+	laggy SHREK;
+	SHREK.print();
+	SHREK.interpolate();
 	return 0;
 }
